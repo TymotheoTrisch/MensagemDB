@@ -41,43 +41,48 @@ public class Mensagem {
     
     public void lerMensagemPorUsuario(String apelido, boolean parameter) {
         String sql;
-        final String divisor = "-----------------------------------------------------------------------------------------\n";
+        final String divisor = "---------------------------------------------------------------\n";
         StringBuilder sb = new StringBuilder();
-        
-        if(parameter)
-        sql = "SELECT usuario.apelido, mensagem.texto FROM mensagem" 
-                    + " INNER JOIN usuario ON mensagem.idRemetente = usuario.rowid"
-                    + " WHERE mensagem.idDestinatario = ( SELECT usuario.rowid FROM usuario WHERE apelido= ?);";
-        else
-        sql = "SELECT usuario.apelido, mensagem.texto FROM mensagem" 
-                    + " INNER JOIN usuario ON mensagem.idDestinatario = usuario.rowid"
-                    + " WHERE mensagem.idRemetente = ( SELECT usuario.rowid FROM usuario WHERE apelido= ?);";
-        
+
+        if (parameter) {
+            sql = "SELECT usuario.apelido AS apelido, mensagem.texto AS texto FROM mensagem" +
+                    " INNER JOIN usuario ON mensagem.idRemetente = usuario.rowid" +
+                    " WHERE mensagem.idDestinatario = (SELECT usuario.rowid FROM usuario WHERE apelido = ?);";
+        } else {
+            sql = "SELECT usuario.apelido, mensagem.texto FROM mensagem" +
+                    " INNER JOIN usuario ON mensagem.idDestinatario = usuario.rowid" +
+                    " WHERE mensagem.idRemetente = (SELECT usuario.rowid FROM usuario WHERE apelido = ?);";
+        }
+    
         try (Connection conn = connect();
-        PreparedStatement pstmt  = conn.prepareStatement(sql)){
-
-            ResultSet rs = pstmt.executeQuery();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    
             
-            pstmt.setString(1, apelido);
-
+    
+            pstmt.setString(1, apelido); // Mova essa linha para antes de executeQuery()
+    
+            ResultSet rs = pstmt.executeQuery();
+    
             sb.append(divisor);
             sb.append(String.format("|%-25s|%-35s|\n", "USUARIO", "TEXTO"));
             sb.append(divisor);
-
-            while(rs.next()) {
+    
+            while (rs.next()) {
                 String apelidoUsuario = rs.getString("apelido");
                 String texto = rs.getString("texto");
-                
+    
                 sb.append(String.format("|%-25s|%-35s|\n", apelidoUsuario, texto));
             }
-
+    
+            sb.append(divisor);
+    
             System.out.println(sb.toString());
-
-        } catch(SQLException e) {
+    
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
     }
+    
     
     public void lerMensagem() {
         final String divisor = "-----------------------------------------------------------------------------------------\n";
@@ -106,6 +111,8 @@ public class Mensagem {
                 sb.append(String.format("|%-25s|%-25s|%-35s|\n", apelidoRemetente, apelidDestinatario, texto));
             
             }
+
+            sb.append(divisor);
 
             System.out.println(sb.toString());
         

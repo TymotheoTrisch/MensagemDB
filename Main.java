@@ -38,10 +38,10 @@ public class Main {
                     lerTodasMensagens();
                     break;
                 case 4:
-                    // lerMensagensRemetente(leitor);
+                    lerMensagensRemetente(leitor);
                     break;
                 case 5:
-                    // lerMensagensDestinatario(leitor);
+                    lerMensagensDestinatario(leitor);
                     break;
                 case 6:
                     lerUsuarios();
@@ -81,6 +81,24 @@ public class Main {
     
     public static void lerTodasMensagens() {
         new Mensagem().lerMensagem();
+    }
+    
+    public static void lerMensagensRemetente(Scanner leitor) {
+        System.out.println("Digite qual o remetente:");
+        leitor.nextLine();
+        String remetente = leitor.nextLine();
+
+        new Mensagem().lerMensagemPorUsuario(remetente, false);
+
+    }
+
+    public static void lerMensagensDestinatario(Scanner leitor) {
+        System.out.println("Digite qual o destinatario:");
+        leitor.nextLine();
+        String destinatario = leitor.nextLine();
+
+        new Mensagem().lerMensagemPorUsuario(destinatario, true);
+
     }
     
     public static void lerUsuarios() {

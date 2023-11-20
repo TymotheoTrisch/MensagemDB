@@ -39,7 +39,7 @@ public class Usuario {
     }
 
     public void lerUsuario() {
-        final String divisor = "-----------------------------------------------------------------------------------------\n";
+        final String divisor = "-----------------------\n";
         StringBuilder sb = new StringBuilder();
 
         String sql = "SELECT rowid, apelido FROM usuario;";
@@ -61,6 +61,10 @@ public class Usuario {
                 sb.append(String.format("|%-5s|%-15s|\n", id, apelidoUsuario));
 
             }
+
+            sb.append(divisor);
+
+            System.out.println(sb.toString());
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
