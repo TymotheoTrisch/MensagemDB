@@ -41,6 +41,8 @@ public class Mensagem {
     
     public void lerMensagemPorUsuario(String apelido, boolean parameter) {
         String sql;
+        final String divisor = "-----------------------------------------------------------------------------------------\n";
+        StringBuilder sb = new StringBuilder();
         
         if(parameter)
         sql = "SELECT usuario.apelido, mensagem.texto FROM mensagem" 
@@ -58,11 +60,19 @@ public class Mensagem {
             
             pstmt.setString(1, apelido);
 
+            sb.append(divisor);
+            sb.append(String.format("|%-25s|%-35s|\n", "USUARIO", "TEXTO"));
+            sb.append(divisor);
+
             while(rs.next()) {
-                int apelidoUsuario = rs.getInt("apelido");
+                String apelidoUsuario = rs.getString("apelido");
                 String texto = rs.getString("texto");
-                System.out.println("Usuario: "+ apelidoUsuario + " - " + texto);
+                
+                sb.append(String.format("|%-25s|%-35s|\n", apelidoUsuario, texto));
             }
+
+            System.out.println(sb.toString());
+
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -70,6 +80,9 @@ public class Mensagem {
     }
     
     public void lerMensagem() {
+        final String divisor = "-----------------------------------------------------------------------------------------\n";
+        StringBuilder sb = new StringBuilder();
+
         String sql = "SELECT Remetente.apelido AS ApelidoRemetente, " + 
                 "Destinatario.apelido AS ApelidoDestinatario, " + 
                 "Mensagem.texto FROM Mensagem " + 
@@ -81,12 +94,21 @@ public class Mensagem {
 
             ResultSet rs = stmt.executeQuery(sql);
 
+            sb.append(divisor);
+            sb.append(String.format("|%-25s|%-25s|%-35s|\n", "REMETENTE", "DESTINATARIO", "TEXTO"));
+            sb.append(divisor);
+
             while(rs.next()) {
                 String apelidoRemetente = rs.getString("ApelidoRemetente");
                 String apelidDestinatario = rs.getString("ApelidoDestinatario");
                 String texto = rs.getString("texto");
-                System.out.println("Remetente: "+ apelidoRemetente + " - Destinatario: " + apelidDestinatario + " - " + texto);
+
+                sb.append(String.format("|%-25s|%-25s|%-35s|\n", apelidoRemetente, apelidDestinatario, texto));
+            
             }
+
+            System.out.println(sb.toString());
+        
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }

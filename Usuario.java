@@ -39,6 +39,9 @@ public class Usuario {
     }
 
     public void lerUsuario() {
+        final String divisor = "-----------------------------------------------------------------------------------------\n";
+        StringBuilder sb = new StringBuilder();
+
         String sql = "SELECT rowid, apelido FROM usuario;";
         
         try (
@@ -47,10 +50,16 @@ public class Usuario {
                 ResultSet rs    = stmt.executeQuery(sql)){
             
 
+            sb.append(divisor);
+            sb.append(String.format("|%-5s|%-15s|\n", "ID", "USUARIO"));
+            sb.append(divisor);
+
             while(rs.next()) {
                 int id = rs.getInt("rowid");
                 String apelidoUsuario = rs.getString("apelido");
-                System.out.println("ID: "+ id + " - " + apelidoUsuario);
+
+                sb.append(String.format("|%-5s|%-15s|\n", id, apelidoUsuario));
+
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());
