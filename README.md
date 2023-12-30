@@ -7,13 +7,13 @@ Esse projeto tem como base um sistema simples de troca de mensagens de remetente
 # Índice
 
 - [Mensagem - Correio](#mensagem---correio)
-  - [Descrição do Projeto](#descrição-do-projeto)
-  - [Índice](#índice)
-  - [Pré-requisitos](#pré-requisitos)
-  - [Instalação e Execução](#instalação-e-execução)
-  - [Contribuição](#contribuição)
-  - [Licença](#licença)
-  - [Contato](#contato)
+- [Descrição do Projeto](#descrição-do-projeto)
+- [Índice](#índice)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação e Execução](#instalação-e-execução)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+- [Contato](#contato)
 
 # Pré-requisitos
 
